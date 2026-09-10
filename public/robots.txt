@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /secure-admin-x7k9
+
+Sitemap: https://hackbase.in/sitemap.xml
