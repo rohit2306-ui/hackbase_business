@@ -384,167 +384,784 @@ export function HomePage() {
       </section>
 
       {/* ===== SELECTED WORK ===== */}
-      <section className="section">
-        <div className="container">
-          <Reveal>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-end',
-                marginBottom: '64px',
-              }}
-            >
-              <div>
-                <p className="eyebrow" style={{ marginBottom: '16px' }}>
-                  Selected work
-                </p>
-                <h2 className="editorial-h2">Systems we've designed and delivered.</h2>
-              </div>
-              <Link to="/work" className="btn-link" style={{ flexShrink: 0 }}>
-                All Work
-                <ArrowRight size={15} />
-              </Link>
-            </div>
-          </Reveal>
+      <section className="section home-selected-work">
+  <div className="container">
 
-          {projectsLoading ? (
-            <div style={{ display: 'flex', justifyContent: 'center', padding: '80px 0' }}>
-              <div className="spinner" />
-            </div>
-          ) : featuredProjects.length > 0 ? (
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(12, 1fr)',
-                gap: '24px',
-              }}
-              className="work-grid"
-            >
-              {featuredProjects.map((project, i) => {
-                const isLarge = i === 0 || i === 3;
-                const colSpan = isLarge ? 8 : 4;
-                return (
-                  <Reveal key={project.id} delay={i * 0.08}>
-                    <Link
-                      to={`/work/${project.slug}`}
-                      style={{
-                        gridColumn: `span ${colSpan}`,
-                        display: 'block',
-                      }}
-                      className="work-card-link"
-                    >
-                      <div
-                        style={{
-                          position: 'relative',
-                          aspectRatio: isLarge ? '16 / 9' : '4 / 3',
-                          background: 'var(--surface)',
-                          border: '1px solid var(--border)',
-                          borderRadius: '4px',
-                          overflow: 'hidden',
-                          transition: 'border-color 300ms',
-                        }}
-                        className="work-card"
-                      >
-                        {project.cover_image ? (
-                          <img
-                            src={project.cover_image}
-                            alt={project.name}
-                            style={{
-                              width: '100%',
-                              height: '100%',
-                              objectFit: 'cover',
-                              transition: 'transform 600ms cubic-bezier(0.16, 1, 0.3, 1)',
-                            }}
-                            className="work-card-img"
-                          />
-                        ) : (
-                          <div
-                            style={{
-                              width: '100%',
-                              height: '100%',
-                              background: 'linear-gradient(135deg, var(--surface) 0%, var(--surface-elevated) 100%)',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                            }}
-                          >
-                            <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-                              {project.name}
-                            </span>
-                          </div>
-                        )}
-                        <div
-                          style={{
-                            position: 'absolute',
-                            inset: 0,
-                            background: 'linear-gradient(180deg, transparent 50%, rgba(8, 9, 11, 0.8) 100%)',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'flex-end',
-                            padding: '24px',
-                          }}
-                        >
-                          <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
-                            {project.industry && <span className="tag" style={{ background: 'rgba(8,9,11,0.6)', backdropFilter: 'blur(8px)' }}>{project.industry}</span>}
-                            {project.project_type && <span className="tag" style={{ background: 'rgba(8,9,11,0.6)', backdropFilter: 'blur(8px)' }}>{project.project_type}</span>}
-                          </div>
-                          <h3
-                            style={{
-                              fontSize: isLarge ? '1.5rem' : '1.125rem',
-                              fontWeight: 500,
-                              color: 'var(--text-primary)',
-                              marginBottom: '4px',
-                            }}
-                          >
-                            {project.name}
-                          </h3>
-                          {project.short_description && (
-                            <p
-                              style={{
-                                fontSize: '0.8125rem',
-                                color: 'var(--text-secondary)',
-                                display: '-webkit-box',
-                                WebkitLineClamp: 2,
-                                WebkitBoxOrient: 'vertical',
-                                overflow: 'hidden',
-                              }}
-                            >
-                              {project.short_description}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </Link>
-                  </Reveal>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="empty-state">
-              <p className="empty-state-title">No projects published yet.</p>
-              <p className="empty-state-desc">Selected case studies will appear here.</p>
-            </div>
-          )}
+    {/* =========================
+        HEADER
+    ========================= */}
 
-          <style>{`
-            .work-card:hover {
-              border-color: var(--border-hover) !important;
-            }
-            .work-card:hover .work-card-img {
-              transform: scale(1.04);
-            }
-            @media (max-width: 768px) {
-              .work-grid {
-                grid-template-columns: 1fr !important;
-              }
-              .work-card-link {
-                grid-column: span 1 !important;
-              }
-            }
-          `}</style>
+    <Reveal>
+      <div className="sw-header">
+
+        <div className="sw-heading">
+          <p className="eyebrow">
+            Selected work
+          </p>
+
+          <h2 className="editorial-h2">
+            Systems built around
+            <br />
+            <span>real problems.</span>
+          </h2>
         </div>
-      </section>
+
+        <Link to="/work" className="sw-all-link">
+          <span>View all work</span>
+          <ArrowRight size={15} />
+        </Link>
+
+      </div>
+    </Reveal>
+
+
+    {/* =========================
+        PROJECT LAYOUT
+    ========================= */}
+
+    <div className="sw-project-layout">
+
+      {/* =====================
+          SARGAM — FEATURED
+      ===================== */}
+
+      <Reveal delay={0.05}>
+        <Link
+          to="/casestudy/sargam-healthcare"
+          className="sw-project sw-featured"
+        >
+
+          <div className="sw-image-wrap">
+
+            <img
+              src="https://res.cloudinary.com/dg1yfhbcg/image/upload/v1789110622/Screenshot_2026-09-11_123930.png"
+              alt="Sargam Healthcare digital healthcare system"
+              className="sw-image"
+            />
+
+            <div className="sw-overlay" />
+
+            {/* Top information */}
+            <div className="sw-top">
+
+              <span className="sw-number">
+                01
+              </span>
+
+              <span className="sw-open">
+                <ArrowUpRight size={16} />
+              </span>
+
+            </div>
+
+            {/* Bottom information */}
+            <div className="sw-content">
+
+              <div className="sw-tags">
+                <span>Healthcare</span>
+                <span>Digital Systems</span>
+              </div>
+
+              <h3>
+                Sargam Healthcare
+              </h3>
+
+              <p>
+                Building digital infrastructure and operational systems
+                for a modern healthcare organization.
+              </p>
+
+            </div>
+
+          </div>
+
+        </Link>
+      </Reveal>
+
+
+      {/* =====================
+          RIGHT COLUMN
+      ===================== */}
+
+      <div className="sw-side">
+
+        {/* =================
+            PULSECARE
+        ================= */}
+
+        <Reveal delay={0.12}>
+          <Link
+            to="/casestudy/pulsecare"
+            className="sw-project sw-secondary"
+          >
+
+            <div className="sw-image-wrap">
+
+              <img
+                src="https://res.cloudinary.com/dg1yfhbcg/image/upload/v1789110694/Screenshot_2026-09-11_124114.png"
+                alt="PulseCare healthcare technology product"
+                className="sw-image"
+              />
+
+              <div className="sw-overlay" />
+
+              <div className="sw-top">
+
+                <span className="sw-number">
+                  02
+                </span>
+
+                <span className="sw-open">
+                  <ArrowUpRight size={15} />
+                </span>
+
+              </div>
+
+              <div className="sw-content">
+
+                <div className="sw-tags">
+                  <span>Healthcare</span>
+                  <span>Product</span>
+                </div>
+
+                <h3>
+                  PulseCare
+                </h3>
+
+                <p>
+                  A technology-led healthcare product designed around
+                  accessibility, experience and execution.
+                </p>
+
+              </div>
+
+            </div>
+
+          </Link>
+        </Reveal>
+
+
+        {/* =================
+            PHARMORITE
+        ================= */}
+
+        <Reveal delay={0.18}>
+          <Link
+            to="/casestudy/pharmorite"
+            className="sw-project sw-secondary"
+          >
+
+            <div className="sw-image-wrap">
+
+              <img
+                src="https://res.cloudinary.com/dg1yfhbcg/image/upload/v1789110303/Screenshot_2026-09-11_123429.png"
+                alt="Pharmorite healthcare product development"
+                className="sw-image"
+              />
+
+              <div className="sw-overlay" />
+
+              <div className="sw-top">
+
+                <span className="sw-number">
+                  03
+                </span>
+
+                <span className="sw-open">
+                  <ArrowUpRight size={15} />
+                </span>
+
+              </div>
+
+              <div className="sw-content">
+
+                <div className="sw-tags">
+                  <span>Healthcare</span>
+                  <span>Product Development</span>
+                </div>
+
+                <h3>
+                  Pharmorite
+                </h3>
+
+                <p>
+                  Designing a focused digital product experience for
+                  a healthcare-focused business.
+                </p>
+
+              </div>
+
+            </div>
+
+          </Link>
+        </Reveal>
+
+      </div>
+
+    </div>
+
+
+    {/* =========================
+        FOOTER
+    ========================= */}
+
+    <Reveal delay={0.22}>
+      <div className="sw-footer">
+
+        <div className="sw-footer-line" />
+
+        <p>
+          Strategy, product and technology — brought together to
+          solve problems that matter.
+        </p>
+
+        <Link
+          to="/work"
+          className="sw-footer-link"
+        >
+          Explore selected work
+          <ArrowRight size={15} />
+        </Link>
+
+      </div>
+    </Reveal>
+
+
+    {/* =========================
+        STYLES
+    ========================= */}
+
+    <style>{`
+
+      /* =====================================
+         HEADER
+      ===================================== */
+
+      .home-selected-work {
+        overflow: hidden;
+      }
+
+      .sw-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        gap: 40px;
+
+        margin-bottom: 52px;
+      }
+
+      .sw-heading .eyebrow {
+        margin-bottom: 15px;
+      }
+
+      .sw-heading .editorial-h2 {
+        margin: 0;
+        line-height: 0.95;
+      }
+
+      .sw-heading .editorial-h2 span {
+        color: var(--text-muted);
+      }
+
+      .sw-all-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+
+        flex-shrink: 0;
+
+        padding-bottom: 8px;
+
+        color: var(--text-primary);
+
+        border-bottom: 1px solid var(--border);
+
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+
+        text-decoration: none;
+
+        transition:
+          border-color 250ms ease,
+          gap 250ms ease;
+      }
+
+      .sw-all-link:hover {
+        gap: 13px;
+        border-color: var(--text-primary);
+      }
+
+
+      /* =====================================
+         MAIN PROJECT LAYOUT
+      ===================================== */
+
+      .sw-project-layout {
+        display: grid;
+
+        grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.85fr);
+
+        gap: 20px;
+
+        width: 100%;
+      }
+
+
+      /* =====================================
+         PROJECT LINK
+      ===================================== */
+
+      .sw-project {
+        display: block;
+
+        width: 100%;
+
+        text-decoration: none;
+
+        min-width: 0;
+      }
+
+
+      /* =====================================
+         IMAGE WRAPPER
+      ===================================== */
+
+      .sw-image-wrap {
+        position: relative;
+
+        width: 100%;
+
+        overflow: hidden;
+
+        background: var(--surface);
+
+        border: 1px solid var(--border);
+
+        isolation: isolate;
+      }
+
+      /*
+        Featured card is deliberately NOT huge.
+        It has a controlled premium editorial ratio.
+      */
+
+      .sw-featured .sw-image-wrap {
+        height: 560px;
+      }
+
+      /*
+        Smaller cards.
+      */
+
+      .sw-secondary .sw-image-wrap {
+        height: 270px;
+      }
+
+
+      /* =====================================
+         IMAGE
+      ===================================== */
+
+      .sw-image {
+        position: absolute;
+
+        inset: 0;
+
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+
+        /*
+          Dark monochrome initial state.
+        */
+
+        filter:
+          grayscale(100%)
+          brightness(0.48)
+          contrast(1.03);
+
+        transform: scale(1.001);
+
+        transition:
+          filter 800ms cubic-bezier(0.16, 1, 0.3, 1),
+          transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+
+      /* =====================================
+         CINEMATIC BLACK OVERLAY
+      ===================================== */
+
+      .sw-overlay {
+        position: absolute;
+
+        inset: 0;
+
+        z-index: 1;
+
+        background:
+          linear-gradient(
+            180deg,
+            rgba(5, 6, 8, 0.18) 0%,
+            rgba(5, 6, 8, 0.04) 35%,
+            rgba(5, 6, 8, 0.9) 100%
+          );
+
+        transition:
+          background 700ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+
+      /* =====================================
+         TOP
+      ===================================== */
+
+      .sw-top {
+        position: absolute;
+
+        top: 18px;
+        left: 18px;
+        right: 18px;
+
+        z-index: 3;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .sw-number {
+        color: rgba(255,255,255,0.65);
+
+        font-size: 0.55rem;
+
+        letter-spacing: 0.14em;
+      }
+
+      .sw-open {
+        width: 34px;
+        height: 34px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid rgba(255,255,255,0.22);
+
+        background: rgba(5,6,8,0.28);
+
+        backdrop-filter: blur(14px);
+
+        color: white;
+
+        transition:
+          background 300ms ease,
+          color 300ms ease,
+          transform 350ms ease;
+      }
+
+
+      /* =====================================
+         CONTENT
+      ===================================== */
+
+      .sw-content {
+        position: absolute;
+
+        left: 25px;
+        right: 25px;
+        bottom: 24px;
+
+        z-index: 3;
+      }
+
+      .sw-tags {
+        display: flex;
+
+        flex-wrap: wrap;
+
+        gap: 6px;
+
+        margin-bottom: 11px;
+      }
+
+      .sw-tags span {
+        display: inline-flex;
+
+        padding: 6px 8px;
+
+        border:
+          1px solid
+          rgba(255,255,255,0.16);
+
+        background:
+          rgba(5,6,8,0.42);
+
+        backdrop-filter: blur(12px);
+
+        color:
+          rgba(255,255,255,0.68);
+
+        font-size: 0.49rem;
+
+        line-height: 1;
+
+        letter-spacing: 0.1em;
+
+        text-transform: uppercase;
+      }
+
+      .sw-content h3 {
+        margin: 0 0 7px;
+
+        color: white;
+
+        font-size: 1.7rem;
+
+        line-height: 1;
+
+        font-weight: 400;
+
+        letter-spacing: -0.045em;
+      }
+
+      .sw-featured .sw-content h3 {
+        font-size: clamp(2rem, 3vw, 3rem);
+      }
+
+      .sw-content p {
+        max-width: 500px;
+
+        margin: 0;
+
+        color:
+          rgba(255,255,255,0.63);
+
+        font-size: 0.69rem;
+
+        line-height: 1.65;
+
+        display: -webkit-box;
+
+        -webkit-line-clamp: 2;
+
+        -webkit-box-orient: vertical;
+
+        overflow: hidden;
+      }
+
+
+      /* =====================================
+         RIGHT COLUMN
+      ===================================== */
+
+      .sw-side {
+        display: grid;
+
+        grid-template-rows: 1fr 1fr;
+
+        gap: 20px;
+
+        min-width: 0;
+      }
+
+
+      /* =====================================
+         HOVER
+      ===================================== */
+
+      .sw-project:hover .sw-image {
+        filter:
+          grayscale(0%)
+          brightness(0.9)
+          contrast(1);
+
+        transform: scale(1.055);
+      }
+
+      .sw-project:hover .sw-overlay {
+        background:
+          linear-gradient(
+            180deg,
+            rgba(5,6,8,0.04) 0%,
+            rgba(5,6,8,0.02) 32%,
+            rgba(5,6,8,0.78) 100%
+          );
+      }
+
+      .sw-project:hover .sw-open {
+        background: white;
+        color: #08090b;
+
+        transform:
+          translate(2px, -2px);
+      }
+
+
+      /* =====================================
+         FOOTER
+      ===================================== */
+
+      .sw-footer {
+        display: grid;
+
+        grid-template-columns:
+          minmax(0, 1fr)
+          auto;
+
+        column-gap: 40px;
+
+        margin-top: 55px;
+      }
+
+      .sw-footer-line {
+        grid-column: 1 / -1;
+
+        width: 100%;
+        height: 1px;
+
+        margin-bottom: 22px;
+
+        background: var(--border);
+      }
+
+      .sw-footer p {
+        max-width: 520px;
+
+        margin: 0;
+
+        color: var(--text-muted);
+
+        font-size: 0.72rem;
+
+        line-height: 1.7;
+      }
+
+      .sw-footer-link {
+        align-self: end;
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+        color: var(--text-primary);
+
+        font-size: 0.59rem;
+
+        letter-spacing: 0.12em;
+
+        text-transform: uppercase;
+
+        text-decoration: none;
+      }
+
+
+      /* =====================================
+         TABLET
+      ===================================== */
+
+      @media (max-width: 900px) {
+
+        .sw-project-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .sw-featured .sw-image-wrap {
+          height: 480px;
+        }
+
+        .sw-side {
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: none;
+        }
+
+        .sw-secondary .sw-image-wrap {
+          height: 300px;
+        }
+
+      }
+
+
+      /* =====================================
+         MOBILE
+      ===================================== */
+
+      @media (max-width: 620px) {
+
+        .sw-header {
+          flex-direction: column;
+          align-items: flex-start;
+
+          margin-bottom: 32px;
+        }
+
+        .sw-project-layout {
+          display: flex;
+
+          flex-direction: column;
+
+          gap: 14px;
+        }
+
+        .sw-featured .sw-image-wrap {
+          height: 390px;
+        }
+
+        .sw-side {
+          display: flex;
+
+          flex-direction: column;
+
+          gap: 14px;
+        }
+
+        .sw-secondary .sw-image-wrap {
+          height: 310px;
+        }
+
+        .sw-content {
+          left: 18px;
+          right: 18px;
+          bottom: 18px;
+        }
+
+        .sw-featured .sw-content h3 {
+          font-size: 2rem;
+        }
+
+        .sw-content p {
+          font-size: 0.66rem;
+        }
+
+        .sw-top {
+          top: 15px;
+          left: 15px;
+          right: 15px;
+        }
+
+        .sw-footer {
+          display: flex;
+
+          flex-direction: column;
+
+          gap: 20px;
+        }
+
+        .sw-footer-line {
+          margin-bottom: 2px;
+        }
+
+      }
+
+    `}</style>
+
+  </div>
+</section>
 
       {/* ===== APPROACH ===== */}
       <ApproachSection />
@@ -702,7 +1319,7 @@ export function HomePage() {
               >
                 {siteConfig.founderImageUrl ? (
                   <img
-                    src={siteConfig.founderImageUrl}
+                    src="https://res.cloudinary.com/dg1yfhbcg/image/upload/v1789063189/1788865342759.jpg"
                     alt={siteConfig.founderName}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
